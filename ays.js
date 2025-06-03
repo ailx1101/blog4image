@@ -171,7 +171,7 @@ var rule = {
         })
         let json = dealJson(decrypt_AES(res))
         log(json)
-        if (/.(m3u8|mp4|m4a|mp3)/.test(json.url)) {
+        if (/.(m3u8|mp4|m4a|mp3|mkv)/.test(json.url)) {
             input = {
                 parse: 0,
                 jx: 0,
