@@ -24,7 +24,7 @@ var rule = {
   class_url: "40&4&39&38&44&35",
   headers: {
     "User-Agent": "okhttp/3.10.0",
-    "Content-Type":"application/x-www-form-urlencoded"
+    "Content-Type": "application/x-www-form-urlencoded"
   },
   play_parse: true, // 服务器解析播放
   推荐: $js.toString(() => {
@@ -46,13 +46,13 @@ var rule = {
   }),
   搜索: $js.toString(() => {
     let res = post(MY_URL, {
-      headers:{
-        "Content-Type":"application/x-www-form-urlencoded"
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
       },
-      body:{
-        type_id:0,
-        keywords:KEY,
-        page:MY_PAGE,
+      body: {
+        type_id: 0,
+        keywords: KEY,
+        page: MY_PAGE,
       }
     })
     log(res)
@@ -71,15 +71,15 @@ var rule = {
     setResult(d)
   }),
   二级: $js.toString(() => {
-    let res = post(MY_URL,{
-       headers:{
-        "Content-Type":"application/x-www-form-urlencoded"
+    let res = post(MY_URL, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
       },
-      body:{
-        vod_id:231,
+      body: {
+        vod_id: vod_id,
       }
     })
-    
+
     let data = dealJson(res)
     let json = dealJson(decrypt_AES(data.data))
 
@@ -93,7 +93,7 @@ var rule = {
       let p1 = []
       urls.forEach(url => {
         p1.push(url.name + '$' + url.parse_api_url)
-      })  
+      })
       play_urls.push(p1)
     }
 
@@ -115,4 +115,21 @@ var rule = {
       vod_play_from: play_from.join("$$$"),
     }
   }),
+  lazy: $js.toString(() => {
+    if (/.(m3u8|mp4|m4a|mp3)/.test(MY_URL)) {
+            input = {
+                parse: 0,
+                jx: 0,
+                url: MY_URL,
+            };
+        } else {
+        let res = request(MY_URL)
+        let json = dealJson(res)
+         input = {
+                parse: 0,
+                jx: 0,
+                url: json.url,
+            };
+        }
+  })
 }
